@@ -1,11 +1,13 @@
-import TodoCounter from "./TodoCounter";
-import TodoSearch from "./TodoSearch";
-import TodoList from "./TodoList";
-import TodoItem from "./TodoItem";
-import CreateTodoButton from "./CreateTodoButton";
-import React from "react";
+import TodoCounter from "../TodoCounter";
+import TodoSearch from "../TodoSearch";
+import TodoList from "../TodoList";
+import TodoItem from "../TodoItem";
+import CreateTodoButton from "../CreateTodoButton";
+import Modal from "../Modal";
+import { useLocalStorage } from "./useLocalStoreage";
+import React, { useState } from "react";
 
-//   const defaultTodos = [
+// const defaultTodos = [
 //   { text: "Crear web", completed: true },
 //   { text: "tomar curso react", completed: false },
 //   { text: "Ir al medico", completed: false },
@@ -15,19 +17,15 @@ import React from "react";
 // localStorage.setItem("TODOS_V1", JSON.stringify(defaultTodos));
 
 function App() {
-  const localStorageTodos = localStorage.getItem("TODOS_V1");
-
-  let parsedTodos;
-
-  if (!localStorageTodos) {
-    localStorage.setItem("TODOS_V1", JSON.stringify([]));
-    parsedTodos = [];
-  } else {
-    parsedTodos = JSON.parse(localStorageTodos);
-  }
-
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage("TODOS_V1", []);
   const [searchValue, setSearchValue] = React.useState("");
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const completedTodos = todos.filter((todo) => !!todo.completed).length;
 
@@ -36,12 +34,6 @@ function App() {
   const filteredTodos = todos.filter((todo) =>
     todo.text.toLowerCase().includes(searchValue.toLowerCase())
   );
-
-  const saveTodos = (newTodos) => {
-    localStorage.setItem("TODOS_V1", JSON.stringify(newTodos));
-
-    setTodos(newTodos);
-  };
 
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -61,8 +53,11 @@ function App() {
     <>
       <TodoCounter completed={completedTodos} total={totalTodos} />
       <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
-
       <TodoList>
+        {loading && <p>Cargando...</p>}
+        {error && <p>Hubo un error</p>}
+        {!loading && filteredTodos.length === 10 && <p>Crea tu primer todo!</p>}
+
         {filteredTodos.map((todo) => (
           <TodoItem
             key={todo.text}
@@ -73,8 +68,12 @@ function App() {
           />
         ))}
       </TodoList>
+      <CreateTodoButton setIsModalOpen={setIsModalOpen} />
 
-      <CreateTodoButton />
+      <div className="App">
+        {/* <button onClick={() => setIsModalOpen(true)}>Open Modal</button> */}
+        <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />
+      </div>
     </>
   );
 }
