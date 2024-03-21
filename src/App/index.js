@@ -7,14 +7,14 @@ import Modal from "../Modal";
 import { useLocalStorage } from "./useLocalStoreage";
 import React, { useState } from "react";
 
-// const defaultTodos = [
-//   { text: "Crear web", completed: true },
-//   { text: "tomar curso react", completed: false },
-//   { text: "Ir al medico", completed: false },
-//   { text: "Completar ejercicios de javaScript", completed: false },
-// ];
+const defaultTodos = [
+  { text: "Crear web", completed: true },
+  { text: "tomar curso react", completed: false },
+  { text: "Ir al medico", completed: false },
+  { text: "Completar ejercicios de javaScript", completed: false },
+];
 
-// localStorage.setItem("TODOS_V1", JSON.stringify(defaultTodos));
+localStorage.setItem("TODOS_V1", JSON.stringify(defaultTodos));
 
 function App() {
   const {
@@ -71,8 +71,8 @@ function App() {
       <CreateTodoButton setIsModalOpen={setIsModalOpen} />
 
       <div className="App">
-        {/* <button onClick={() => setIsModalOpen(true)}>Open Modal</button> */}
-        <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />
+        <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}/>
+          
       </div>
     </>
   );

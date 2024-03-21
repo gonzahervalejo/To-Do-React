@@ -1,6 +1,6 @@
 import React from "react";
 import { TiDelete } from "react-icons/ti";
-import casco1jpg from "../casco1jpg.jpg";
+import TodoForm from "../TodoForm";
 
 
 const Modal = ({ isOpen, closeModal }) => {
@@ -8,7 +8,7 @@ const Modal = ({ isOpen, closeModal }) => {
 
   return (
     <div>
-      <img src={casco1jpg} alt="foto" />
+      <TodoForm/>
       <TiDelete onClick={closeModal} size={30} cursor={"pointer"} />
     </div>
   );

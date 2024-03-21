@@ -1,8 +1,11 @@
 import "./CreateTodoButton.css";
 
-const CreateTodoButton = (setIsModalOpen) => {
+const CreateTodoButton = ({ setIsModalOpen })  => {
+
+  
+  function handleClick() { setIsModalOpen(true)}
   return (
-    <button className="CreateTodoButton" onClick={() => setIsModalOpen(true)}>
+    <button className="CreateTodoButton" onClick={handleClick}>
       +
     </button>
   );
