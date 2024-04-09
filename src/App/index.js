@@ -70,9 +70,8 @@ function App() {
       </TodoList>
       <CreateTodoButton setIsModalOpen={setIsModalOpen} />
 
-      <div className="App">
-        <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}/>
-          
+      <div>
+        <Modal isOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} />
       </div>
     </>
   );
